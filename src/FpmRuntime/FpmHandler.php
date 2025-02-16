@@ -130,7 +130,12 @@ final class FpmHandler extends HttpHandler
     public function handleRequest(HttpRequestEvent $event, Context $context): HttpResponse
     {
         $request = $this->eventToFastCgiRequest($event, $context);
-
+      $passThroughCallback = static function( string $outputBuffer, string $errorBuffer )
+      {
+        echo 'Output: ' . $outputBuffer;
+        echo 'Error: ' . $errorBuffer;
+      };
+        $request->addPassThroughCallbacks($passThroughCallback);
         // The script will timeout 1 second before the remaining time
         // to allow some time for Bref/PHP-FPM to recover and cleanup
         $margin = 1000;
