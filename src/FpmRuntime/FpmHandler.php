@@ -187,6 +187,7 @@ final class FpmHandler extends HttpHandler
         $responseHeaders = $this->getResponseHeaders($response);
         // Determine if the response is a streaming response
         $body = $response->getBody();
+        $this->logger->warning(get_debug_type($body));
         if ($body instanceof StreamInterface) {
           $this->logger->warning('Streaming response');
 
