@@ -132,8 +132,8 @@ final class FpmHandler extends HttpHandler
         $request = $this->eventToFastCgiRequest($event, $context);
       $passThroughCallback = static function( string $outputBuffer, string $errorBuffer )
       {
-        echo 'Output: ' . $outputBuffer;
-        echo 'Error: ' . $errorBuffer;
+        echo 'Output1: ' . $outputBuffer;
+        echo 'Error1: ' . $errorBuffer;
       };
         $request->addPassThroughCallbacks($passThroughCallback);
         // The script will timeout 1 second before the remaining time
@@ -187,9 +187,10 @@ final class FpmHandler extends HttpHandler
         $responseHeaders = $this->getResponseHeaders($response);
         // Determine if the response is a streaming response
         $body = $response->getBody();
+        $this->logger->warning('debugging response: ' . get_class($response));
         $this->logger->warning(get_debug_type($body));
         $this->logger->warning(print_r($responseHeaders, true));
-        if ($body instanceof StreamInterface) {
+        if ($response instanceof StreamInterface) {
           $this->logger->warning('Streaming response');
 
           // If the body is a stream, handle streaming response
