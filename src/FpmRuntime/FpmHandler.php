@@ -132,6 +132,7 @@ final class FpmHandler extends HttpHandler
         $request = $this->eventToFastCgiRequest($event, $context);
       $passThroughCallback = static function( string $outputBuffer, string $errorBuffer )
       {
+        // TODO: I think streaming can happen here, but not sure about headers....
         echo 'Output1: ' . $outputBuffer;
         echo 'Error1: ' . $errorBuffer;
       };
